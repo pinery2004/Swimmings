@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32228.343
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swimming", "Swimming\Swimming.csproj", "{DAB85369-2074-4837-A761-611CA2544DD8}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupSwimming", "SetupSwimming\SetupSwimming.vdproj", "{BFA6AA9E-FE8E-4798-96C7-3B0C38C21918}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DAB85369-2074-4837-A761-611CA2544DD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAB85369-2074-4837-A761-611CA2544DD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAB85369-2074-4837-A761-611CA2544DD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAB85369-2074-4837-A761-611CA2544DD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFA6AA9E-FE8E-4798-96C7-3B0C38C21918}.Debug|Any CPU.ActiveCfg = Debug
+		{BFA6AA9E-FE8E-4798-96C7-3B0C38C21918}.Release|Any CPU.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4431203D-0C5F-4287-AD45-526D631FCC71}
+	EndGlobalSection
+EndGlobal
