@@ -43,10 +43,19 @@ namespace Swimming
 			Console.WriteLine("uxDataGrid_PreviewMouseDown rowIndex=" + rowIndex + "    columnIndex=" + columnIndex);
 			if (rowIndex > 0)
 			{
-				Console.WriteLine("ID=" + dt.Rows[rowIndex]["ID"].ToString());
-				//System.Diagnostics.Process p = System.Diagnostics.Process.Start(@"H:\USER\家族\啓子\水泳\水泳映像\2020_02_05_バタフライ_264.MP4");
 				string strUrl = dt.Rows[rowIndex]["File"].ToString();
-				System.Diagnostics.Process p2 = System.Diagnostics.Process.Start(@"H:\USER\家族\啓子\水泳\水泳映像\" + strUrl);
+#if DEBUG
+				Console.WriteLine("ID=" + dt.Rows[rowIndex]["ID"].ToString());
+				MessageBox.Show("ID=" + dt.Rows[rowIndex]["ID"].ToString(),
+					"ID",
+					MessageBoxButton.OK,
+					MessageBoxImage.Asterisk);
+				MessageBox.Show(strDogaFileDirectory + strUrl,
+					"動画ファイル",
+					MessageBoxButton.OK,
+					MessageBoxImage.Asterisk);
+#endif
+				System.Diagnostics.Process p2 = System.Diagnostics.Process.Start(strDogaFileDirectory + strUrl);
 			}
 		}
 

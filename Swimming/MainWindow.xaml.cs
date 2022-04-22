@@ -34,28 +34,36 @@ namespace Swimming
 		{
 			InitializeComponent();
 
+			// 初期動画フォルダ名取得
+			//GetConfigulation(out strDogaFileDirectory);
+			strDogaFileDirectory = ConfigurationManager.AppSettings["FolderPath"];
+			txtboxFolder.Text = strDogaFileDirectory;
+
+			// 動画ファイル名一覧表作成
 			uxDataGrid.DataContext = CreateData();
 		}
 
-		private void GetConfigulation(out string o_strFilePath)
-		{
-			o_strFilePath = "";
+		//private void GetConfigulation(out string o_strFilePath)
+		//{
+		//	//o_strFilePath = "";
 
-			//すべてのキーとその値を取得
-			foreach (string key in ConfigurationManager.AppSettings.AllKeys)
-			{
-				Console.WriteLine("{0} : {1}",
-					key, ConfigurationManager.AppSettings[key]);
-				o_strFilePath = ConfigurationManager.AppSettings[key];
-			}
-		}
+		//	////すべてのキーとその値を取得
+		//	//foreach (string key in ConfigurationManager.AppSettings.AllKeys)
+		//	//{
+		//	//	Console.WriteLine("{0} : {1}",
+		//	//		key, ConfigurationManager.AppSettings[key]);
+		//	//	o_strFilePath = ConfigurationManager.AppSettings[key];
+		//	//}
+		//	o_strFilePath = ConfigurationManager.AppSettings["FolderPath"];
+		//}
 
+		/// <summary>
+		/// 動画ファイル名一覧表作成
+		/// </summary>
+		/// <returns>動画ファイル名一覧表 DataTable</returns>
 		private DataTable CreateData()
 		{
 			DirectoryInfo di;
-
-			GetConfigulation(out strDogaFileDirectory);
-			txtboxFolder.Text = strDogaFileDirectory;
 
 			if (Directory.Exists(strDogaFileDirectory))
 			{
@@ -70,9 +78,9 @@ namespace Swimming
 					bFirstLoadDataTable = false;
 				}
 
-				//foreach (var file in di.EnumerateFiles("*クロール*", SearchOption.AllDirectories))
-				foreach (var file in di.EnumerateFiles("*", SearchOption.AllDirectories))
+				foreach (var file in di.EnumerateFiles("*.MP4", SearchOption.TopDirectoryOnly))
 				{
+					DateTime timeLastWrite = file.LastWriteTime;
 					string strID;
 					string strDate;
 					string strStyle;
@@ -86,11 +94,11 @@ namespace Swimming
 					dr[3] = strFrom;
 					dr[4] = file.Name;
 					dr[5] = strMade;
-					if (CheckDispFile(strStyle, strFrom, file.Name, strMade))
+					if (CheckDispFile(file.Name, strMade))
 					{
 						dt.Rows.Add(dr);
 					}
-					//dt.Rows.Add(dr);
+
 					Console.WriteLine(strID + "/" + strDate + "/" + strStyle + "/" + strFrom);
 					Console.WriteLine("========");
 				}
@@ -108,29 +116,32 @@ namespace Swimming
 		/// <summary>
 		/// 動画ファイル名を調べる
 		/// </summary>
-		/// <param name="i_strStyle">泳法</param>
-		/// <param name="i_strFrom">撮影場所</param>
 		/// <param name="i_FileName">ファイル名(エラー表示用)</param>
-		/// <param name="i_strMade">ファイル作成日(エラー表示用)</param>
+		/// <param name="i_timeLastWrite">ファイル作成日時</param>
 		/// <returns></returns>
-		private bool CheckDispFile(string i_strStyle, string i_strFrom, string i_FileName, string i_strMade)
+		private bool CheckDispFile(string i_FileName, string i_strMade)
 		{
-			bool bDisp = false;
-			bool bCrawl = i_strStyle.Contains("クロール");
-			bool bBreast = i_strStyle.Contains("平泳ぎ");
-			bool bBack = i_strStyle.Contains("背泳ぎ");
-			bool bButterfly = i_strStyle.Contains("バタフライ");
-			bool bBatakick = i_strStyle.Contains("バタキック");
+			string strID;
+			string strDate;
+			string strStyle;
+			string strFrom;
+			GetFilePropaty(i_FileName, out strID, out strDate, out strStyle, out strFrom);
 
-			bool bUnderWater = i_strFrom.Contains("水中");
+			bool bDisp = false;
+			bool bCrawl = strStyle.Contains("クロール");
+			bool bBreast = strStyle.Contains("平泳ぎ");
+			bool bBack = strStyle.Contains("背泳ぎ");
+			bool bButterfly = strStyle.Contains("バタフライ");
+			bool bBatakick = strStyle.Contains("バタキック");
+			bool bUnderWater = strFrom.Contains("水中");
 
 			if (!(bCrawl || bBreast || bBack || bButterfly || bBatakick))
 			{
 				MessageBox.Show("ファイル名にエラーがありました\nファイル名=" + i_FileName +
-					"\n泳法=" + i_strStyle + "\n撮影場所=" + i_strFrom + "\n作成日時=" + i_strMade,
+					"\n泳法=" + strStyle + "\n撮影場所=" + strFrom + "\n作成日時=" + i_strMade,
 					"画像ファイル名チェック",
-				   MessageBoxButton.OK,
-				   MessageBoxImage.Error);
+					MessageBoxButton.OK,
+					MessageBoxImage.Error);
 			}
 
 			if (chkSwimCrawl.IsChecked == true)
@@ -199,33 +210,21 @@ namespace Swimming
 				})
 				{
 					if (cofd.ShowDialog() == CommonFileDialogResult.Ok)
-
-					//           using (SWF.FolderBrowserDialog swfdialog = new SWF.FolderBrowserDialog())
-					//           {
-					//// 初期選択フォルダーが設定できる①
-					//swfdialog.SelectedPath = strDogaFileDirectory;
-
-					//// ダイアログに表示する説明文を設定できる②
-					//swfdialog.Description = "水泳動画が入っているフォルダを選択して下さい";
-
-					//// 新しくフォルダを作成を許可する②
-					//swfdialog.ShowNewFolderButton = false;
-
-					//// ダイアログを表示する。
-					//SWF.DialogResult swfresult = swfdialog.ShowDialog();
-					//if (swfresult == SWF.DialogResult.OK)
 					{
 						// 選択されたフォルダを取得する
-						string strDogaFileDirectory = cofd.FileName;
-
+						strDogaFileDirectory = cofd.FileName + "\\";
+						Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+						config.AppSettings.Settings["FolderPath"].Value = strDogaFileDirectory;
 						txtboxFolder.Text = strDogaFileDirectory;
-
-						//MessageBox.Show(string.Format("{0}が選択されました", strDogaFileDirectory));
+#if DEBUG
 						MessageBox.Show($"{cofd.FileName}を選択しました");
+#endif
 						if (Directory.Exists(cofd.FileName))
 						{
-							string[] files = SearchFile(strDogaFileDirectory, "*.mp4", "*.mp4", false);
-							if (files.Length > 0) break;
+							if (checkDogaFolder(strDogaFileDirectory))
+							{
+								break;
+							}
 						}
 					}
 					else
@@ -241,44 +240,40 @@ namespace Swimming
 			{
 				uxDataGrid.DataContext = CreateData();
 			}
+			string strTest2 = ConfigurationManager.AppSettings["FolderPath"];
+			Console.WriteLine(strTest2);
 
 		}
 
-		/// <summary>
-		/// ファイルの検索を行う
-		/// </summary>
-		/// <param name="dirPath">フォルダのパス。</param>
-		/// <param name="pattern">検索する正規表現のパターン。</param>
-		/// <param name="fileWildcards">対象とするファイル。</param>
-		/// <param name="ignoreCase">大文字小文字を区別するか。</param>
-		/// <returns>見つかったファイルパスの配列。</returns>
-		public string[] SearchFile(
-			string dirPath, string pattern, string fileWildcards, bool ignoreCase)
+		bool checkDogaFolder(string i_strDogaFileDirectory)
 		{
-			System.Collections.ArrayList fileCol =
-				new System.Collections.ArrayList();
+			bool bDoga = false;
+			DirectoryInfo di;
 
-			//正規表現のオプションを設定
-			System.Text.RegularExpressions.RegexOptions opts =
-				System.Text.RegularExpressions.RegexOptions.None;
-			if (ignoreCase)
-				opts |= System.Text.RegularExpressions.RegexOptions.IgnoreCase;
-			System.Text.RegularExpressions.Regex reg =
-				new System.Text.RegularExpressions.Regex(pattern, opts);
+			//GetConfigulation(out strDogaFileDirectory);
+			//txtboxFolder.Text = strDogaFileDirectory;
 
-			//フォルダ内にあるファイルを取得
-			System.IO.DirectoryInfo dir = new System.IO.DirectoryInfo(dirPath);
-			System.IO.FileInfo[] files = dir.GetFiles(fileWildcards);
-			foreach (System.IO.FileInfo f in files)
+			if (Directory.Exists(i_strDogaFileDirectory))
 			{
-				//正規表現のパターンを使用して一つずつファイルを調べる
-				if (reg.IsMatch(f.FullName))
+				di = new DirectoryInfo(i_strDogaFileDirectory);
+
+				foreach (var file in di.EnumerateFiles("*.MP4", SearchOption.TopDirectoryOnly))
 				{
-					fileCol.Add(f.FullName);
+					string strFileName = file.Name;
+					bool bCrawl = strFileName.Contains("クロール");
+					bool bBreast = strFileName.Contains("平泳ぎ");
+					bool bBack = strFileName.Contains("背泳ぎ");
+					bool bButterfly = strFileName.Contains("バタフライ");
+					bool bBatakick = strFileName.Contains("バタキック");
+
+					if (bCrawl || bBreast || bBack || bButterfly || bBatakick)
+					{
+						bDoga = true;
+						break;
+					}
 				}
 			}
-
-			return (string[])fileCol.ToArray(typeof(string));
+			return bDoga;
 		}
 
 		/// <summary>
