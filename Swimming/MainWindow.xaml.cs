@@ -35,27 +35,12 @@ namespace Swimming
 			InitializeComponent();
 
 			// 初期動画フォルダ名取得
-			//GetConfigulation(out strDogaFileDirectory);
 			strDogaFileDirectory = ConfigurationManager.AppSettings["FolderPath"];
 			txtboxFolder.Text = strDogaFileDirectory;
 
 			// 動画ファイル名一覧表作成
 			uxDataGrid.DataContext = CreateData();
 		}
-
-		//private void GetConfigulation(out string o_strFilePath)
-		//{
-		//	//o_strFilePath = "";
-
-		//	////すべてのキーとその値を取得
-		//	//foreach (string key in ConfigurationManager.AppSettings.AllKeys)
-		//	//{
-		//	//	Console.WriteLine("{0} : {1}",
-		//	//		key, ConfigurationManager.AppSettings[key]);
-		//	//	o_strFilePath = ConfigurationManager.AppSettings[key];
-		//	//}
-		//	o_strFilePath = ConfigurationManager.AppSettings["FolderPath"];
-		//}
 
 		/// <summary>
 		/// 動画ファイル名一覧表作成
@@ -99,8 +84,8 @@ namespace Swimming
 						dt.Rows.Add(dr);
 					}
 
-					Console.WriteLine(strID + "/" + strDate + "/" + strStyle + "/" + strFrom);
-					Console.WriteLine("========");
+					WriteLine(strID + "/" + strDate + "/" + strStyle + "/" + strFrom);
+					WriteLine("========");
 				}
 
 				// IDでSort
@@ -179,7 +164,7 @@ namespace Swimming
 			{
 				Console.Write(s + "=");
 			}
-			Console.WriteLine("\n------");
+			WriteLine("\n------");
 			int nProperty = arrProperty.Length;
 			o_strID = arrProperty[nProperty - 1].Substring(0, 3);
 			o_strDate = strFile.Substring(0, 10);
@@ -197,8 +182,7 @@ namespace Swimming
 		private void btnDoga_Click(object sender, RoutedEventArgs e)
 		{
 			bool bDogaFileExist = true;
-			//var dialog = new SWF.FolderBrowserDialog();
-			//var result = dialog.ShowDialog();
+
 			for (int i = 0; i < 100; i++)
 			{
 				using (var cofd = new CommonOpenFileDialog()
@@ -214,7 +198,7 @@ namespace Swimming
 						// 選択されたフォルダを取得する
 						strDogaFileDirectory = cofd.FileName + "\\";
 						Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-						config.AppSettings.Settings["FolderPath"].Value = strDogaFileDirectory;
+						// config.AppSettings.Settings["FolderPath"].Value = strDogaFileDirectory;
 						txtboxFolder.Text = strDogaFileDirectory;
 #if DEBUG
 						MessageBox.Show($"{cofd.FileName}を選択しました");
@@ -241,17 +225,13 @@ namespace Swimming
 				uxDataGrid.DataContext = CreateData();
 			}
 			string strTest2 = ConfigurationManager.AppSettings["FolderPath"];
-			Console.WriteLine(strTest2);
-
+			WriteLine(strTest2);
 		}
 
 		bool checkDogaFolder(string i_strDogaFileDirectory)
 		{
 			bool bDoga = false;
 			DirectoryInfo di;
-
-			//GetConfigulation(out strDogaFileDirectory);
-			//txtboxFolder.Text = strDogaFileDirectory;
 
 			if (Directory.Exists(i_strDogaFileDirectory))
 			{
@@ -314,5 +294,11 @@ namespace Swimming
 			return (rowIndex, columnIndex);
 		}
 
+		void WriteLine(string strMsg)
+		{
+#if DEBUG
+			Console.WriteLine(strMsg);
+#endif
+		}
 	}
 }

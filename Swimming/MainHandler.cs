@@ -19,33 +19,33 @@ namespace Swimming
 	{
 		private void uxDataGrid_CurrentCellChanged(object sender, EventArgs e)
 		{
-			Console.WriteLine("uxDataGrid_CurrentCellChanged");
+			WriteLine("uxDataGrid_CurrentCellChanged");
 		}
 
 		private void uxDataGrid_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
 		{
-			Console.WriteLine("uxDataGrid_MouseLeftButtonDown");
+			WriteLine("uxDataGrid_MouseLeftButtonDown");
 		}
 
 		private void uxDataGrid_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
 		{
-			Console.WriteLine("uxDataGrid_MouseRightButtonDown");
+			WriteLine("uxDataGrid_MouseRightButtonDown");
 		}
 
 		private void uxDataGrid_PreviewKeyDown(object sender, KeyEventArgs e)
 		{
-			Console.WriteLine("uxDataGrid_PreviewKeyDown");
+			WriteLine("uxDataGrid_PreviewKeyDown");
 		}
 
 		private void uxDataGrid_PreviewMouseDown(object sender, MouseButtonEventArgs e)
 		{
 			(var rowIndex, var columnIndex) = ClickCellIndex(uxDataGrid, e.GetPosition(uxDataGrid));
-			Console.WriteLine("uxDataGrid_PreviewMouseDown rowIndex=" + rowIndex + "    columnIndex=" + columnIndex);
+			WriteLine("uxDataGrid_PreviewMouseDown rowIndex=" + rowIndex + "    columnIndex=" + columnIndex);
 			if (rowIndex > 0)
 			{
 				string strUrl = dt.Rows[rowIndex]["File"].ToString();
 #if DEBUG
-				Console.WriteLine("ID=" + dt.Rows[rowIndex]["ID"].ToString());
+				WriteLine("ID=" + dt.Rows[rowIndex]["ID"].ToString());
 				MessageBox.Show("ID=" + dt.Rows[rowIndex]["ID"].ToString(),
 					"ID",
 					MessageBoxButton.OK,
@@ -82,51 +82,51 @@ namespace Swimming
 
 		private void chkSwimCrawl_Checked(object sender, RoutedEventArgs e)
 		{
-			Console.WriteLine("chkSwimCrawl_Checked");
+			WriteLine("chkSwimCrawl_Checked");
 		}
 
 		private void chkSwimCrawl_Unchecked(object sender, RoutedEventArgs e)
 		{
-			Console.WriteLine("chkSwimCrawl_Unchecked");
+			WriteLine("chkSwimCrawl_Unchecked");
 		}
 
 		private void chkSwimBreast_Checked(object sender, RoutedEventArgs e)
 		{
-			Console.WriteLine("chkSwimBreast_Checked");
+			WriteLine("chkSwimBreast_Checked");
 		}
 		private void chkSwimBreast_Unchecked(object sender, RoutedEventArgs e)
 		{
-			Console.WriteLine("chkSwimBreast_Unchecked");
+			WriteLine("chkSwimBreast_Unchecked");
 		}
 
 		private void chkSwimBack_Checked(object sender, RoutedEventArgs e)
 		{
-			Console.WriteLine("chkSwimBack_Checked");
+			WriteLine("chkSwimBack_Checked");
 		}
 
 		private void chkSwimBack_Unchecked(object sender, RoutedEventArgs e)
 		{
-			Console.WriteLine("chkSwimBack_Unchecked");
+			WriteLine("chkSwimBack_Unchecked");
 		}
 
 		private void chkSwimButterfly_Checked(object sender, RoutedEventArgs e)
 		{
-			Console.WriteLine("chkSwimButterfly_Checked");
+			WriteLine("chkSwimButterfly_Checked");
 		}
 
 		private void chkSwimButterfly_Unchecked(object sender, RoutedEventArgs e)
 		{
-			Console.WriteLine("chkSwimButterfly_Unchecked");
+			WriteLine("chkSwimButterfly_Unchecked");
 		}
 
 		private void chkSwimBatakick_Checked(object sender, RoutedEventArgs e)
 		{
-			Console.WriteLine("chkSwimBatakick_Checked");
+			WriteLine("chkSwimBatakick_Checked");
 		}
 
 		private void chkSwimBatakick_Unchecked(object sender, RoutedEventArgs e)
 		{
-			Console.WriteLine("chkSwimBatakick_Unchecked");
+			WriteLine("chkSwimBatakick_Unchecked");
 		}
 
 		private void btnTakeSet_Click(object sender, RoutedEventArgs e)
@@ -145,27 +145,27 @@ namespace Swimming
 
 		private void chkFromPoolside_Checked(object sender, RoutedEventArgs e)
 		{
-			Console.WriteLine("chkFromPoolside_Checked");
+			WriteLine("chkFromPoolside_Checked");
 		}
 
 		private void chkFromPoolside_Unchecked(object sender, RoutedEventArgs e)
 		{
-			Console.WriteLine("chkFromPoolside_Unchecked");
+			WriteLine("chkFromPoolside_Unchecked");
 		}
 
 		private void chkFromUnderwater_Checked(object sender, RoutedEventArgs e)
 		{
-			Console.WriteLine("chkFromUnderwater_Checked");
+			WriteLine("chkFromUnderwater_Checked");
 		}
 
 		private void chkFromUnderwater_Unchecked(object sender, RoutedEventArgs e)
 		{
-			Console.WriteLine("chkFromUnderwater_Unchecked");
+			WriteLine("chkFromUnderwater_Unchecked");
 		}
 
 		private void chkSwimCrawl_Click(object sender, RoutedEventArgs e)
 		{
-			Console.WriteLine("chkSwimCrawl_Click");
+			WriteLine("chkSwimCrawl_Click");
 			if (chkSwimCrawl.IsChecked == true)
 			{
 				chkSwimBreast.IsChecked = false;
@@ -179,7 +179,7 @@ namespace Swimming
 
 		private void chkSwimBreast_Click(object sender, RoutedEventArgs e)
 		{
-			Console.WriteLine("chkBreast_Click");
+			WriteLine("chkBreast_Click");
 			if (chkSwimBreast.IsChecked == true)
 			{
 				chkSwimCrawl.IsChecked = false;
@@ -192,7 +192,7 @@ namespace Swimming
 
 		private void chkSwimBack_Click(object sender, RoutedEventArgs e)
 		{
-			Console.WriteLine("chkSwimBack_Click");
+			WriteLine("chkSwimBack_Click");
 			if (chkSwimBack.IsChecked == true)
 			{
 				chkSwimCrawl.IsChecked = false;
@@ -205,7 +205,7 @@ namespace Swimming
 
 		private void chkSwimButterfly_Click(object sender, RoutedEventArgs e)
 		{
-			Console.WriteLine("chkSwimButterfly_Click");
+			WriteLine("chkSwimButterfly_Click");
 			if (chkSwimButterfly.IsChecked == true)
 			{
 				chkSwimCrawl.IsChecked = false;
@@ -230,7 +230,7 @@ namespace Swimming
 
 		private void chkFromPoolside_Click(object sender, RoutedEventArgs e)
 		{
-			Console.WriteLine("chkFromPoolside_Click");
+			WriteLine("chkFromPoolside_Click");
 			if (chkFromPoolside.IsChecked == true)
 			{
 				chkFromUnderwater.IsChecked = false;
@@ -240,7 +240,7 @@ namespace Swimming
 
 		private void chkFromUnderwater_Click(object sender, RoutedEventArgs e)
 		{
-			Console.WriteLine("chkFromUnderwater_Click");
+			WriteLine("chkFromUnderwater_Click");
 			if (chkFromUnderwater.IsChecked == true)
 			{
 				chkFromPoolside.IsChecked = false;
